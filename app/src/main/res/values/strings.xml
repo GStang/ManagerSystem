@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ManagerSystem</string>
+
+
+    ** 登录页面 **
+    <string name="ID">教工号或学号</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="doRegister">没有账户？立即注册</string>
 </resources>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -36,7 +37,7 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements LoginRequest.Getresponse {
     @BindView(R.id.btn_register)
-    Button mbtnregister;
+    TextView mbtnregister;
     @BindView(R.id.btn_login)
     Button mbtnlogin;
     @BindView(R.id.et_username)
