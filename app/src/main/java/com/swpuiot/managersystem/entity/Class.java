@@ -1,9 +1,11 @@
 package com.swpuiot.managersystem.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by DELL on 2018/4/29.
  */
-public class Class {
+public class Class implements Serializable {
 
     private Long cNo;
     private String cName;
