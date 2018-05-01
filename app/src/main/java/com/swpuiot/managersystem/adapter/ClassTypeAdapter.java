@@ -20,9 +20,9 @@ public class ClassTypeAdapter extends TypeAdapter<Class> {
     @Override
     public void write(JsonWriter out, Class value) throws IOException {
         out.beginObject();
-        out.name("cNo").value(value.getcId());
+        out.name("cNo").value(value.getcNo());
         out.name("cName").value(value.getcName());
-        out.name("cID").value(value.getcId());
+        out.name("cId").value(value.getcId());
         out.name("courseId").value(value.getCourseId());
         out.endObject();
     }

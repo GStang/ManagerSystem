@@ -1,9 +1,11 @@
 package com.swpuiot.managersystem.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by DELL on 2018/4/29.
  */
-public class Course {
+public class Course implements Serializable {
 
 
     private Long id;
@@ -34,4 +36,12 @@ public class Course {
         this.english = english;
     }
 
+    public Course() {
+    }
+
+    public Course(Long id, String name, String english) {
+        this.id = id;
+        this.name = name;
+        this.english = english;
+    }
 }

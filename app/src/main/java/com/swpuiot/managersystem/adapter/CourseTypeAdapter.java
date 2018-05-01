@@ -19,7 +19,7 @@ public class CourseTypeAdapter extends TypeAdapter<Course> {
         out.beginObject();
         out.name("id").value(value.getId());
         out.name("name").value(value.getName());
-        out.name("englis").value(value.getEnglish());
+        out.name("english").value(value.getEnglish());
         out.endObject();
     }
 

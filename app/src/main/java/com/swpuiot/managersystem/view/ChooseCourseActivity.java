@@ -30,7 +30,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * 这个界面是ClassManager的界面
+ *  这个是老师创建班级的时候选择课程的界面
  */
 public class ChooseCourseActivity extends AppCompatActivity {
 

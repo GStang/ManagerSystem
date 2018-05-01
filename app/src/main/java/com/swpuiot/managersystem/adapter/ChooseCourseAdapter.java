@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.swpuiot.managersystem.R;
+import com.swpuiot.managersystem.entity.Course;
 import com.swpuiot.managersystem.entity.CourseResponse;
 import com.swpuiot.managersystem.view.ChooseCourseActivity;
+import com.swpuiot.managersystem.view.CreateClassActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +25,15 @@ public class ChooseCourseAdapter extends RecyclerView.Adapter<ChooseCourseAdapte
     List<CourseResponse.DataBean> list = new ArrayList<>();
 
 
-    public ChooseCourseAdapter(Context context,  List<CourseResponse.DataBean> list) {
+    public ChooseCourseAdapter(Context context, List<CourseResponse.DataBean> list) {
         this.context = context;
         this.list = list;
     }
-    public void changelist(List<CourseResponse.DataBean> list){
+
+    public void changelist(List<CourseResponse.DataBean> list) {
         this.list = list;
     }
+
     @Override
     public ClassViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_class, parent, false);
@@ -38,8 +42,21 @@ public class ChooseCourseAdapter extends RecyclerView.Adapter<ChooseCourseAdapte
     }
 
     @Override
-    public void onBindViewHolder(ClassViewHolder holder, int position) {
+    public void onBindViewHolder(final ClassViewHolder holder, int position) {
         holder.temp.setText(list.get(position).getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            Course course;
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CreateClassActivity.class);
+                course = new Course(list.get(holder.getAdapterPosition()).getId(),
+                        list.get(holder.getAdapterPosition()).getName(),
+                        list.get(holder.getAdapterPosition()).getEnglish());
+                intent.putExtra("course", course);
+                context.startActivity(intent);
+            }
+        });
     }
 
 
@@ -54,13 +71,6 @@ public class ChooseCourseAdapter extends RecyclerView.Adapter<ChooseCourseAdapte
         public ClassViewHolder(View itemView) {
             super(itemView);
             temp = (TextView) itemView.findViewById(R.id.tv_temp);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    Intent intent = new Intent(context, ChooseCourseActivity.class);
-//                    context.startActivity(intent);
-                }
-            });
         }
     }
 }

@@ -39,11 +39,11 @@ public class CourseResponse {
     }
 
     public static class DataBean {
-        private int id;
+        private long id;
         private String name;
         private String english;
 
-        public int getId() {
+        public long getId() {
             return id;
         }
 
