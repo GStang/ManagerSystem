@@ -13,6 +13,7 @@ import com.swpuiot.managersystem.entity.LoginEntity;
 import com.swpuiot.managersystem.entity.User;
 import com.swpuiot.managersystem.httprequestimpl.LoginRequest;
 import com.swpuiot.managersystem.view.FirstActivity;
+import com.swpuiot.managersystem.view.MyUser;
 import com.swpuiot.managersystem.view.RegisterActivity;
 
 import java.io.IOException;

@@ -74,9 +74,7 @@ public class FirstActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_first);
-        initWindow();
 
         ButterKnife.bind(this);
         classlist.setLayoutManager(new LinearLayoutManager(this));
@@ -90,8 +88,17 @@ public class FirstActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.activity_first);
         navigationView = (NavigationView) findViewById(R.id.nva);
-//        menu= (ImageView) findViewById(R.id.main_menu);
-        View headerView = navigationView.getHeaderView(0);//获取头布局
+        menu= (ImageView) findViewById(R.id.main_menu);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawerLayout.isDrawerOpen(navigationView)){
+                    drawerLayout.closeDrawer(navigationView);
+                }else{
+                    drawerLayout.openDrawer(navigationView);
+                }
+            }
+        });
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
