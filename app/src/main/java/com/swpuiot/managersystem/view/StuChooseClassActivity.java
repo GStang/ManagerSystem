@@ -29,13 +29,14 @@ public class StuChooseClassActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ChooseClassAdapter adapter;
-    private ArrayList<Class>list;
+    private ArrayList<Class>list = new ArrayList<Class>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
         setContentView(R.layout.activity_stu_choose_class);
+
+        init();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_choose_class);
         adapter = new ChooseClassAdapter(this,list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -58,13 +59,14 @@ public class StuChooseClassActivity extends AppCompatActivity {
                         //将JSON的String 转成一个JsonArray对象
                         JsonArray jsonArray = parser.parse(s).getAsJsonArray();
                         Gson gson = new Gson();
-                        list = new ArrayList<Class>();
+//                        list = new ArrayList<Class>();
                         //加强for循环遍历JsonArray
                         for (JsonElement user : jsonArray) {
                             //使用GSON，直接转成Bean对象
                             Class userBean = gson.fromJson(user, Class.class);
                             list.add(userBean);
                         }
+                        adapter.notifyDataSetChanged();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

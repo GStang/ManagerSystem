@@ -3,22 +3,16 @@ package com.swpuiot.managersystem;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.swpuiot.managersystem.entity.LoginEntity;
 import com.swpuiot.managersystem.entity.User;
-import com.swpuiot.managersystem.httpinterface.LoginService;
 import com.swpuiot.managersystem.httprequestimpl.LoginRequest;
-import com.swpuiot.managersystem.util.GsonUtils;
-import com.swpuiot.managersystem.util.RetrofitUtil;
 import com.swpuiot.managersystem.view.FirstActivity;
-import com.swpuiot.managersystem.view.MyUser;
 import com.swpuiot.managersystem.view.RegisterActivity;
 
 import java.io.IOException;
@@ -27,13 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements LoginRequest.Getresponse {
     @BindView(R.id.btn_register)

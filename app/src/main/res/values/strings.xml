@@ -7,4 +7,9 @@
     <string name="password">密码</string>
     <string name="login">登录</string>
     <string name="doRegister">没有账户？立即注册</string>
+
+
+    ** 课 程 **
+    <string name="Class">班级</string>
+    <string name="Course">课程</string>
 </resources>

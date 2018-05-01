@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHolder> {
     Context context;
-    List<StuJoinedClassEntity> list = new ArrayList<>();
-
+    List<StuJoinedClassEntity> list;
+//
     public ClassAdapter(Context context, List<StuJoinedClassEntity> list) {
         this.context = context;
         this.list = list;
@@ -63,5 +63,9 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
                 }
             });
         }
+    }
+    public void changeList(List<StuJoinedClassEntity> list){
+        this.list = list;
+        notifyDataSetChanged();
     }
 }
