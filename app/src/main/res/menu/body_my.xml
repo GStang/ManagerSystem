@@ -2,20 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/wallet"
-        android:icon="@drawable/favorite"
-        android:title="    钱包"/>
+        android:id="@+id/menu_id"
+        android:icon="@drawable/id"
+        android:title="ID"/>
     <item
-        android:id="@+id/photo"
-        android:icon="@drawable/favorite"
-        android:title="    相册"/>
+        android:id="@+id/menu_phone"
+        android:icon="@drawable/phone"
+        android:title="电话"/>
     <item
-        android:id="@+id/dress"
-        android:icon="@drawable/favorite"
-        android:title="    装扮"/>
-    <item
-        android:id="@+id/file"
-        android:icon="@drawable/favorite"
-        android:title="    文件"/>
+        android:id="@+id/menu_email"
+        android:icon="@drawable/email"
+        android:title="邮箱"/>
 
 </menu>
