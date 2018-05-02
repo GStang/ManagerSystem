@@ -16,11 +16,17 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.swpuiot.managersystem.R;
+import com.swpuiot.managersystem.entity.Attendance;
+import com.swpuiot.managersystem.entity.AttendanceKey;
+import com.swpuiot.managersystem.entity.HttpResult;
 import com.swpuiot.managersystem.entity.Leave;
+import com.swpuiot.managersystem.entity.StudentAndClassInfo;
 import com.swpuiot.managersystem.entity.User;
+import com.swpuiot.managersystem.httpinterface.AttendanceService;
 import com.swpuiot.managersystem.httpinterface.LeaveService;
 import com.swpuiot.managersystem.util.RetrofitUtil;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,6 +36,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class StuClassManagerActivity extends AppCompatActivity {
@@ -63,6 +73,49 @@ public class StuClassManagerActivity extends AppCompatActivity {
     Leave leave = new Leave();
     TextView time;
     EditText reason;
+    String s2;
+    Gson gson = new Gson();
+
+    @OnClick(R.id.attendence)
+    public void attendance() {
+        StudentAndClassInfo info = new StudentAndClassInfo();
+        StudentAndClassInfo.AttendanceBean bean = new StudentAndClassInfo.AttendanceBean();
+        bean.setAttend("出席");
+        StudentAndClassInfo.AttendanceBean.IdBean bean1 = new StudentAndClassInfo.AttendanceBean.IdBean();
+        bean1.setId(MyUser.getUser().getId());
+        bean1.setCNo(cid);
+        bean.setId(bean1);
+        info.setInvalidNumber("000000");
+        info.setAttendance(bean);
+        info.setAttendance(bean);
+
+//        key.setDate(System.currentTimeMillis());
+//        attendance.setId(key);
+//        attendance.setAttend("出席");
+        s2 = gson.toJson(info);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), s2);
+        System.out.println(s2);
+        retrofit.create(AttendanceService.class).checkAttendance(body).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code() == 200) {
+                    try {
+                        if (response.body() != null) {
+                            String s = response.body().string();
+                            gson.fromJson(s, HttpResult.class);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
 
     @OnClick(R.id.btn_askleave)
     public void askleave() {
@@ -108,7 +161,6 @@ public class StuClassManagerActivity extends AppCompatActivity {
     }
 
     public void initLeave() {
-        Gson gson = new Gson();
         s = gson.toJson(leave);
         System.out.println(s);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), s);
