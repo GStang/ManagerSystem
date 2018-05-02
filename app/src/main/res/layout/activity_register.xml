@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.swpuiot.managersystem.view.RegisterActivity">
+    tools:context="com.swpuiot.managersystem.view.RegisterActivity"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent">
+<android.support.v7.widget.Toolbar
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/toolbar_title_size"
+        android:textColor="@color/colorWrite"
+        android:layout_gravity="center"
+        android:text="注册"/>
+
+</android.support.v7.widget.Toolbar>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/toolbar_title_size"
-            android:textColor="@color/colorWrite"
-            android:layout_gravity="center"
-            android:text="注册"/>
-
-    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -216,3 +221,6 @@
         android:layout_margin="4dp"/>
 </LinearLayout>
 </ScrollView>
+
+
+</LinearLayout>
