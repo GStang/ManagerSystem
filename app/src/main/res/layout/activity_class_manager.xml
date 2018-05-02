@@ -22,10 +22,17 @@
         android:layout_below="@id/btn_attdence"
         android:text="查看班级签到情况" />
 
+    <Button
+        android:id="@+id/btn_leavepass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_log"
+        android:text="请假审批" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_log">
+        android:layout_below="@id/btn_leavepass">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_class"

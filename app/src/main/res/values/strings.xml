@@ -12,4 +12,7 @@
     ** 课 程 **
     <string name="Class">班级</string>
     <string name="Course">课程</string>
+
+    <string name="positivebutton">提交</string>
+    <string name="negitavebutton">取消</string>
 </resources>

@@ -33,6 +33,8 @@
         android:textColor="@color/colorWrite"/>
 </android.support.v7.widget.Toolbar>
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/sr_refresh"
+
         android:layout_below="@+id/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

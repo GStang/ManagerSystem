@@ -10,8 +10,11 @@ import android.widget.TextView;
 
 import com.swpuiot.managersystem.R;
 import com.swpuiot.managersystem.entity.StuJoinedClassEntity;
+import com.swpuiot.managersystem.entity.User;
 import com.swpuiot.managersystem.view.ChooseCourseActivity;
 import com.swpuiot.managersystem.view.ClassManagerActivity;
+import com.swpuiot.managersystem.view.MyUser;
+import com.swpuiot.managersystem.view.StuClassManagerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +52,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
         return list.size();
     }
 
+    User user = MyUser.getUser();
     class ClassViewHolder extends RecyclerView.ViewHolder {
         public TextView temp;
 
@@ -58,8 +62,16 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, ClassManagerActivity.class);
-                    context.startActivity(intent);
+                    if (user.getRole() == 1) {
+                        //教师用户跳转到教师管理界面
+                        Intent intent = new Intent(context, ClassManagerActivity.class);
+                        context.startActivity(intent);
+                    }else {
+                        //学生用户跳转到学生管理界面
+                        Intent intent = new Intent(context, StuClassManagerActivity.class);
+                        context.startActivity(intent);
+
+                    }
                 }
             });
         }

@@ -24,7 +24,8 @@
         <activity android:name=".view.StuChooseClassActivity" />
         <activity android:name=".view.CreateClassActivity" />
         <activity android:name=".view.CreateCourseActivity" />
-        <activity android:name=".view.JoinClassActivity"></activity>
+        <activity android:name=".view.JoinClassActivity" />
+        <activity android:name=".view.StuClassManagerActivity"></activity>
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -71,6 +72,18 @@ public class FirstActivity extends AppCompatActivity {
     private MyUser myUser;
     private TextView name;
     private TextView note;
+    @BindView(R.id.sr_refresh)
+    public  SwipeRefreshLayout refreshLayout;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshLayout.setRefreshing(true);
+        if (user.getRole() == 0)
+            getclass();//学生
+        if (user.getRole() == 1)
+            getTeacherClass();//老师
+    }
 
     public User getUser() {
         return user;
@@ -85,11 +98,21 @@ public class FirstActivity extends AppCompatActivity {
         adapter = new ClassAdapter(this,userBeanList);
         classlist.setAdapter(adapter);
         user = (User) getIntent().getSerializableExtra("user");
+        refreshLayout.setRefreshing(true);
         if (user.getRole() == 0)
             getclass();//学生
         if (user.getRole() == 1)
             getTeacherClass();//老师
 
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (user.getRole() == 0)
+                    getclass();//学生
+                if (user.getRole() == 1)
+                    getTeacherClass();//老师
+            }
+        });
 
         drawerLayout = (DrawerLayout) findViewById(R.id.activity_first);
         navigationView = (NavigationView) findViewById(R.id.nva);
@@ -212,11 +235,12 @@ public class FirstActivity extends AppCompatActivity {
                     }
                 }
                 adapter.changeList(userBeanList);
-
+                refreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                refreshLayout.setRefreshing(false);
 
             }
         });
