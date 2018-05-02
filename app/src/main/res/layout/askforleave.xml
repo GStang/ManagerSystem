@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="请假日期"
-        android:text="请选择事件" />
+        android:text="请选择时间" />
 
     <EditText
         android:id="@+id/et_reason"

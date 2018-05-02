@@ -16,9 +16,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.swpuiot.managersystem.R;
 import com.swpuiot.managersystem.entity.Leave;
+import com.swpuiot.managersystem.entity.User;
 import com.swpuiot.managersystem.httpinterface.LeaveService;
 import com.swpuiot.managersystem.util.RetrofitUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -37,7 +39,7 @@ public class StuClassManagerActivity extends AppCompatActivity {
     Button attendenceRecord;
     int mYear;
     int mMonth;
-    int mDay;
+    int mDay;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,10 @@ public class StuClassManagerActivity extends AppCompatActivity {
                         String rea = reason.getText().toString();
                         Toast.makeText(StuClassManagerActivity.this, "Click", Toast.LENGTH_SHORT).show();
 //                        initLeave(ti,rea);
+                        leave.setReason(reason.getText().toString());
+                        leave.setUid(MyUser.getUser().getId());
                     }
+
                 }).setNegativeButton(R.string.negitavebutton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -88,6 +93,8 @@ public class StuClassManagerActivity extends AppCompatActivity {
                 Toast.makeText(StuClassManagerActivity.this, "Click", Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
     public void initLeave() {
