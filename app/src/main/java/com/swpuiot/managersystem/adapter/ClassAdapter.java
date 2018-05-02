@@ -69,7 +69,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
                     }else {
                         //学生用户跳转到学生管理界面
                         Intent intent = new Intent(context, StuClassManagerActivity.class);
-                        intent.putExtra("class", list.get(getAdapterPosition()).getCourseId());
+                        intent.putExtra("class", list.get(getAdapterPosition()).getCId());
                         context.startActivity(intent);
 
                     }

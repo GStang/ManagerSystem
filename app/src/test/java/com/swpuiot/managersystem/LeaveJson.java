@@ -16,7 +16,7 @@ public class LeaveJson {
         Leave leave = new Leave();
         leave.setId(2L);
         leave.setUid(123L);
-        leave.setDate(new Date());
+        leave.setDate("2018-5-2");
         leave.setResult("待审批");
         leave.setCid(1L);
         leave.setReason("请假一天");

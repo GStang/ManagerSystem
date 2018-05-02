@@ -88,7 +88,8 @@ public class JoinClassActivity extends AppCompatActivity {
     public String getTeacherName(Long id) {
         Retrofit retrofit = RetrofitUtil.getRetrofit();
         final String[] s = new String[1];
-        retrofit.create(UserService.class).getTeacherName(123).enqueue(new Callback<ResponseBody>() {
+        // TODO: 2018/5/2
+        retrofit.create(UserService.class).getTeacherName(myclass.getcId()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

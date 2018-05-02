@@ -3,6 +3,7 @@ package com.swpuiot.managersystem.view;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.swpuiot.managersystem.util.RetrofitUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +41,9 @@ public class StuClassManagerActivity extends AppCompatActivity {
     Button attendenceRecord;
     int mYear;
     int mMonth;
-    int mDay;;
+    int mDay;
+    ;
+    long cid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,8 @@ public class StuClassManagerActivity extends AppCompatActivity {
         mYear = ca.get(Calendar.YEAR);
         mMonth = ca.get(Calendar.MONTH);
         mDay = ca.get(Calendar.DAY_OF_MONTH);
+        Intent intent = getIntent();
+        cid = intent.getLongExtra("class", 0);
     }
 
     Retrofit retrofit = RetrofitUtil.getRetrofit();
@@ -73,6 +79,10 @@ public class StuClassManagerActivity extends AppCompatActivity {
 //                        initLeave(ti,rea);
                         leave.setReason(reason.getText().toString());
                         leave.setUid(MyUser.getUser().getId());
+                        leave.setResult("待审批");
+                        leave.setCid(cid);
+
+//                        leave.setDate(new Date());
                     }
 
                 }).setNegativeButton(R.string.negitavebutton, new DialogInterface.OnClickListener() {

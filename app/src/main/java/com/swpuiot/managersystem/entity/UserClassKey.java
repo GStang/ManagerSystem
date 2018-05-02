@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 public class UserClassKey implements Serializable {
     private Long id;
-    private Long cno;
+    private Long c_no;
 
     public Long getId() {
         return id;
@@ -23,11 +23,11 @@ public class UserClassKey implements Serializable {
     }
 
     public Long getCno() {
-        return cno;
+        return c_no;
     }
 
     public void setCno(Long cno) {
-        this.cno = cno;
+        this.c_no = cno;
     }
 
 }

@@ -19,7 +19,7 @@ public interface ClassService {
     @GET("/get/all")
     Call<ResponseBody> getAllCLass(@Query("id") long id);
 
-    @GET("/get/allclass")
+    @GET("/get/allClass")
     Call<ResponseBody> getAllCLass();
     @POST("/class")
     Call<ResponseBody> addClass(@Body RequestBody body);
@@ -27,7 +27,7 @@ public interface ClassService {
     @DELETE("/class")
     Call<ResponseBody> deleteClass(@Body RequestBody body);
 
-    @GET("/get/allbyUserID")
+    @GET("/get/allByUserId")
     Call<ResponseBody> getAllClassByUserID(@Query("id") long id);
 
     @GET("/get/getAllTeachersClass")

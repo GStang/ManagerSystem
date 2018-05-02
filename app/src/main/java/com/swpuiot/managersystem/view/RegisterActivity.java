@@ -124,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                Toast.makeText(RegisterActivity.this, t.getMessage()+"error", Toast.LENGTH_SHORT).show();
             }
         });
     }
