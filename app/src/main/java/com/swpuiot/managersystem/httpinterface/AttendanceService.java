@@ -13,15 +13,19 @@ import retrofit2.http.Query;
  * Created by DELL on 2018/5/2.
  */
 public interface AttendanceService {
-    @GET("/getAll")
+    @GET("/attend/getAll")
     Call<ResponseBody> get(@Query("id") Long id);
 
-    @GET("/validate")
+    @GET("/attend/validate")
     Call<ResponseBody> getValidateNumber(@Query("id") Long id);
 
-    @POST("/checkAttendance")
+    @POST("/attend/checkAttendance")
     Call<ResponseBody> checkAttendance(@Body RequestBody StudentAndClassInfoBody);
 
-    @GET("/getSomeoneAttendance")
+    @GET("/attend/getSomeoneAttendance")
     Call<ResponseBody> getSomeoneAttendance(@Query("id") Long id, @Query("cno") Long cno);
+
+    @GET("/attend/getCount")
+    Call<ResponseBody> getCount(@Query("id") Long cno);
+
 }

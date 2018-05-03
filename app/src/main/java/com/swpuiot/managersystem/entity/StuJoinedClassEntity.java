@@ -1,5 +1,7 @@
 package com.swpuiot.managersystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by DELL on 2018/4/30.
  */
@@ -7,46 +9,48 @@ public class StuJoinedClassEntity {
 
 
     /**
-     * cNo : 1
+     * cno : 1
      * cName : 操作系统一班
      * cId : 123
      * courseId : 1
      */
 
-    private int cNo; //班级号
-    private String cName; //班级名字
-    private int cId; // 用户ID
-    private int courseId; //课程ID
+    private long cno;
+    @JsonProperty("cName")
+    private String cname;
+    @JsonProperty("cId")
+    private long cId;
+    private long courseId;
 
-    public int getCNo() {
-        return cNo;
+    public long getCno() {
+        return cno;
     }
 
-    public void setCNo(int cNo) {
-        this.cNo = cNo;
+    public void setCno(long cno) {
+        this.cno = cno;
     }
 
     public String getCName() {
-        return cName;
+        return cname;
     }
 
     public void setCName(String cName) {
-        this.cName = cName;
+        this.cname = cName;
     }
 
-    public int getCId() {
+    public long getCId() {
         return cId;
     }
 
-    public void setCId(int cId) {
+    public void setCId(long cId) {
         this.cId = cId;
     }
 
-    public int getCourseId() {
+    public long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(int courseId) {
+    public void setCourseId(long courseId) {
         this.courseId = courseId;
     }
 }

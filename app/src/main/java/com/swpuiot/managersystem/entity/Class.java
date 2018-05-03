@@ -7,17 +7,17 @@ import java.io.Serializable;
  */
 public class Class implements Serializable {
 
-    private Long cNo;
+    private Long cno;
     private String cName;
     private Long cId;
     private Long courseId;
 
-    public Long getcNo() {
-        return cNo;
+    public Long getCno() {
+        return cno;
     }
 
-    public void setcNo(Long cNo) {
-        this.cNo = cNo;
+    public void setCno(Long cno) {
+        this.cno = cno;
     }
 
     public String getcName() {

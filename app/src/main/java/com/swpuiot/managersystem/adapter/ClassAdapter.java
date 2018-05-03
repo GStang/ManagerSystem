@@ -63,13 +63,14 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
                 public void onClick(View v) {
                     if (user.getRole() == 1) {
                         //教师用户跳转到教师管理界面
-                        Intent intent = new Intent(context, ClassManagerActivity.class);
-                        intent.putExtra("teaClass",list.get(getAdapterPosition()).getCId());
+                        Intent intent = new Intent(context, ClassManagerActivity.class);//
+                        System.out.println(list.get(getAdapterPosition()).getCno());
+                        intent.putExtra("teaClass",list.get(getAdapterPosition()).getCno());
                         context.startActivity(intent);
                     }else {
                         //学生用户跳转到学生管理界面
                         Intent intent = new Intent(context, StuClassManagerActivity.class);
-                        intent.putExtra("stuClass", list.get(getAdapterPosition()).getCId());
+                        intent.putExtra("stuClass", list.get(getAdapterPosition()).getCno());
                         context.startActivity(intent);
 
                     }
@@ -79,6 +80,9 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
     }
     public void changeList(List<StuJoinedClassEntity> list){
         this.list = list;
+
+        long id = list.get(0).getCno();
+        System.out.println("id "+id);
         notifyDataSetChanged();
     }
 }

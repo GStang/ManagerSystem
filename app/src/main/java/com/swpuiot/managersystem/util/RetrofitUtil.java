@@ -23,9 +23,10 @@ public class RetrofitUtil {
 
 
     }
+
     private static Retrofit.Builder builder = new Retrofit.Builder();
     private static Retrofit retrofit = builder
-            .baseUrl("http://123.206.130.39:8080")
+            .baseUrl("http://192.168.1.108:8080")
             .build();
 
     public static Retrofit getRetrofit() {

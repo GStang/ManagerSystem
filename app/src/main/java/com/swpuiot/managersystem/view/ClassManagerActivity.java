@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -13,6 +14,7 @@ import com.swpuiot.managersystem.R;
 import com.swpuiot.managersystem.adapter.ClassManagerAdapter;
 import com.swpuiot.managersystem.entity.Attendance;
 import com.swpuiot.managersystem.entity.Class;
+import com.swpuiot.managersystem.entity.HttpResult;
 import com.swpuiot.managersystem.httpinterface.AttendanceService;
 import com.swpuiot.managersystem.httpinterface.ClassService;
 import com.swpuiot.managersystem.util.RetrofitUtil;
@@ -30,43 +32,42 @@ public class ClassManagerActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ClassManagerAdapter adapter;
-    private ArrayList<Long>list;
+    private ArrayList<Long> list = new ArrayList<>();
+    private Long cid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_manager);
+        cid = getIntent().getLongExtra("teaClass", 0L);
+        System.out.println(cid);
+
         getList();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_class_manager);
-        adapter = new ClassManagerAdapter(list,this);
+        adapter = new ClassManagerAdapter(list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
-
     }
 
-    private void getList(){
+    private void getList() {
         Retrofit retrofit = RetrofitUtil.getRetrofit();
         AttendanceService service = retrofit.create(AttendanceService.class);
-        service.get(getIntent().getLongExtra("teaClass",0)).enqueue(new Callback<ResponseBody>() {
+        service.getCount(cid).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // TODO: 2018/5/3 签到请求
                 System.out.println(response.code());
                 if (response.code() == 200) {
                     try {
-                        String s = response.body().string();
-                        System.out.println(s);
-                        JsonParser parser = new JsonParser();
-                        //将JSON的String 转成一个JsonArray对象
-                        JsonArray jsonArray = parser.parse(s).getAsJsonArray();
-                        Gson gson = new Gson();
-//                        list = new ArrayList<Class>();
-                        //加强for循环遍历JsonArray
-                        for (JsonElement user : jsonArray) {
-                            //使用GSON，直接转成Bean对象
-                            Attendance userBean = gson.fromJson(user, Attendance.class);
-//                            list.add(userBean.get);
+                        if (response.body() != null) {
+                            String s = response.body().string();
+                            System.out.println(s);
+                            ObjectMapper mapper = new ObjectMapper();
+                            Attendance[] results = mapper.readValue(s, Attendance[].class);
+//                            list.add(mapper.readValue(s, Attendance[].class))
                         }
+
+
                         adapter.notifyDataSetChanged();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -81,5 +82,5 @@ public class ClassManagerActivity extends AppCompatActivity {
         });
 
     }
-    }
+}
 

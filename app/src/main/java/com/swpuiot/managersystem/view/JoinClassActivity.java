@@ -79,7 +79,7 @@ public class JoinClassActivity extends AppCompatActivity {
 
     public void initEntity() {
         UserClassKey key = new UserClassKey();
-        key.setCno(myclass.getcNo());
+        key.setCno(myclass.getCno());
         key.setId(MyUser.getUser().getId());
         userclass.setId(key);
 //        userclass.setId(MyUser.getUser().getId());

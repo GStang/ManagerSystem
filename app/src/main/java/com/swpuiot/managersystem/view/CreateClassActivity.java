@@ -59,7 +59,7 @@ public class CreateClassActivity extends AppCompatActivity {
 
     public void initClass() {
         Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new ClassTypeAdapter()).create();
-        myClass.setcNo(Long.valueOf(classNo.getText().toString()));
+        myClass.setCno(Long.valueOf(classNo.getText().toString()));
         myClass.setcName(className.getText().toString());
         myClass.setCourseId(course.getId());
         myClass.setcId(MyUser.getUser().getId());
