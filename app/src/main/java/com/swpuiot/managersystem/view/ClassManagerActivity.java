@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -20,7 +22,9 @@ import com.swpuiot.managersystem.httpinterface.ClassService;
 import com.swpuiot.managersystem.util.RetrofitUtil;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -34,6 +38,7 @@ public class ClassManagerActivity extends AppCompatActivity {
     private ClassManagerAdapter adapter;
     private ArrayList<Long> list = new ArrayList<>();
     private Long cid;
+    private TextView noneText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +48,18 @@ public class ClassManagerActivity extends AppCompatActivity {
         System.out.println(cid);
 
         getList();
+
+        noneText = (TextView) findViewById(R.id.tv_class_manager_none);
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_class_manager);
-        adapter = new ClassManagerAdapter(list, this);
+        adapter = new ClassManagerAdapter(list, this,cid);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+      super.onResume();
     }
 
     private void getList() {
@@ -64,10 +77,16 @@ public class ClassManagerActivity extends AppCompatActivity {
                             System.out.println(s);
                             ObjectMapper mapper = new ObjectMapper();
                             Attendance[] results = mapper.readValue(s, Attendance[].class);
-//                            list.add(mapper.readValue(s, Attendance[].class))
+
+                            for (int i = 0; i < results.length; i++) {
+
+                                list.add(results[i].getId().getDate());
+                            }
                         }
 
-
+                        if (list.size()!=0){
+                            noneText.setVisibility(View.INVISIBLE);
+                        }
                         adapter.notifyDataSetChanged();
                     } catch (IOException e) {
                         e.printStackTrace();

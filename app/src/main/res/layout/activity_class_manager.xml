@@ -6,6 +6,7 @@
     android:orientation="vertical"
     tools:context="com.swpuiot.managersystem.view.ClassManagerActivity">
 
+
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -18,8 +19,19 @@
             android:textColor="@color/colorWrite"
             android:layout_gravity="center"/>
     </android.support.v7.widget.Toolbar>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_class_manager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/tv_class_manager_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:text="暂无签到信息"/>
+    </FrameLayout>
 </LinearLayout>
