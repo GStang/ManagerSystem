@@ -51,7 +51,7 @@ public class SignInformationActivity extends AppCompatActivity {
     private void getList() {
         Retrofit retrofit = RetrofitUtil.getRetrofit();
         AttendanceService service = retrofit.create(AttendanceService.class);
-        service.getSometimeAttendance(cId,time).enqueue(new Callback<ResponseBody>() {
+        service.getSometimeAttendence(cId,time).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 // TODO: 2018/5/3 签到请求

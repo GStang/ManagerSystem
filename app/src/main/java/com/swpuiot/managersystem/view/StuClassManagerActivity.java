@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.swpuiot.managersystem.R;
 import com.swpuiot.managersystem.entity.Attendance;
@@ -47,12 +49,13 @@ public class StuClassManagerActivity extends AppCompatActivity {
     @BindView(R.id.btn_askleave)
     Button askforleave;
 
+    @BindView(R.id.btn_attendence)
     Button attendence;
     Button attendenceRecord;
     int mYear;
     int mMonth;
     int mDay;
-    ;
+    //班级ID
     long cid;
 
     @Override
@@ -73,37 +76,58 @@ public class StuClassManagerActivity extends AppCompatActivity {
     Leave leave = new Leave();
     TextView time;
     EditText reason;
-    String s2;
     Gson gson = new Gson();
+    EditText invalidNumber;
+    StudentAndClassInfo info = new StudentAndClassInfo();
+    Attendance attandance = new Attendance();
+    AttendanceKey key = new AttendanceKey();
+    ObjectMapper mapper = new ObjectMapper();
+    String str;
 
-    @OnClick(R.id.attendence)
+    @OnClick(R.id.btn_attendence)
     public void attendance() {
-        StudentAndClassInfo info = new StudentAndClassInfo();
-        StudentAndClassInfo.AttendanceBean bean = new StudentAndClassInfo.AttendanceBean();
-        bean.setAttend("出席");
-        StudentAndClassInfo.AttendanceBean.IdBean bean1 = new StudentAndClassInfo.AttendanceBean.IdBean();
-        bean1.setId(MyUser.getUser().getId());
-        bean1.setCNo(cid);
-        bean.setId(bean1);
-        info.setInvalidNumber("000000");
-        info.setAttendance(bean);
-        info.setAttendance(bean);
+        final Dialog mdialog = new AlertDialog.Builder(this)
+                .setView(R.layout.attendencepassword)
+                .setPositiveButton(R.string.positivebutton, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String s = invalidNumber.getText().toString()+"";
+                        attandance.setAttend("出席");
+                        key.setId(MyUser.getUser().getId());
+                        key.setcNo(cid);
+                        attandance.setId(key);
+                        info.setAttendance(attandance);
+                        info.setInvalidNumber(s);
+                        try {
+                            str = mapper.writeValueAsString(info);
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
+                        attendanceNet(str);
+                    }
 
-//        key.setDate(System.currentTimeMillis());
-//        attendance.setId(key);
-//        attendance.setAttend("出席");
-        s2 = gson.toJson(info);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), s2);
-        System.out.println(s2);
-        retrofit.create(AttendanceService.class).checkAttendance(body).enqueue(new Callback<ResponseBody>() {
+                }).setNegativeButton(R.string.negitavebutton, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        mdialog.setTitle("请填写签到码");
+        mdialog.setCancelable(true);
+        mdialog.show();
+        invalidNumber = (EditText) mdialog.findViewById(R.id.et_invalid_number);
+    }
+
+    public void attendanceNet(final String s) {
+//        System.out.println(s);
+        retrofit.create(AttendanceService.class).checkAttendance(RequestBody.create(MediaType.parse("application/json"), s)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                System.out.println(response.code()+"Test");
                 if (response.code() == 200) {
                     try {
-                        if (response.body() != null) {
-                            String s = response.body().string();
-                            gson.fromJson(s, HttpResult.class);
-                        }
+                        String result = response.body().string();
+                        Toast.makeText(StuClassManagerActivity.this, result, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

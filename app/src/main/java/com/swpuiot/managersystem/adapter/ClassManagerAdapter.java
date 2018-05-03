@@ -57,7 +57,8 @@ public class ClassManagerAdapter extends RecyclerView.Adapter<ClassManagerAdapte
                 public void onClick(View v) {
                     Intent intent = new Intent(context, SignInformationActivity.class);
                     intent.putExtra("signID",cId);
-                    intent.putExtra("signTime",list.get(getItemCount()));
+                    intent.putExtra("signTime",list.get(getAdapterPosition()));
+                    context.startActivity(intent);
                 }
             });
         }

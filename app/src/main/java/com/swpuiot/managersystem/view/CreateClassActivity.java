@@ -17,6 +17,8 @@ import com.swpuiot.managersystem.entity.Course;
 import com.swpuiot.managersystem.httpinterface.ClassService;
 import com.swpuiot.managersystem.util.RetrofitUtil;
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -80,8 +82,13 @@ public class CreateClassActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.code() == 200) {
                     Toast.makeText(CreateClassActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
-                }
-                Toast.makeText(CreateClassActivity.this, "添加失败", Toast.LENGTH_SHORT).show();
+                } else
+                    try {
+                        if (response.body() != null)
+                            Toast.makeText(CreateClassActivity.this, "添加失败" + response.body().string(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
             }
 
             @Override

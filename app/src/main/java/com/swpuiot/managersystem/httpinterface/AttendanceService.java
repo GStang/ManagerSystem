@@ -28,4 +28,6 @@ public interface AttendanceService {
     @GET("/attend/getCount")
     Call<ResponseBody> getCount(@Query("id") Long cno);
 
+    @GET("/attend/getSomeTimeAttendance")
+    Call<ResponseBody> getSometimeAttendence(@Query("cid") Long cid, @Query("time") Long time);
 }
