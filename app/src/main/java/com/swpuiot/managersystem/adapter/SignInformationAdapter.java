@@ -39,6 +39,14 @@ public class SignInformationAdapter extends RecyclerView.Adapter<SignInformation
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.tvName.setText(list.get(position).getId().getId()+"");
+        if (list.get(position).getAttend().equals("缺席")){
+            holder.ivAttend.setImageResource(R.drawable.signing);
+        }else if(list.get(position).getAttend().equals("出席")){
+            holder.ivAttend.setImageResource(R.drawable.signed);
+        }else {
+            holder.ivAttend.setImageResource(R.drawable.leave);
+        }
+
 
     }
 
