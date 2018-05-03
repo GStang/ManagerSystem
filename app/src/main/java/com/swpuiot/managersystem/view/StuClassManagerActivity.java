@@ -65,7 +65,7 @@ public class StuClassManagerActivity extends AppCompatActivity {
         mMonth = ca.get(Calendar.MONTH);
         mDay = ca.get(Calendar.DAY_OF_MONTH);
         Intent intent = getIntent();
-        cid = intent.getLongExtra("class", 0);
+        cid = intent.getLongExtra("stuClass", 0);
     }
 
     Retrofit retrofit = RetrofitUtil.getRetrofit();

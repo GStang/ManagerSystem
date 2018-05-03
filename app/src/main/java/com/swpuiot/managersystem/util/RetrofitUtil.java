@@ -25,7 +25,7 @@ public class RetrofitUtil {
     }
     private static Retrofit.Builder builder = new Retrofit.Builder();
     private static Retrofit retrofit = builder
-            .baseUrl("http://iywest.natappfree.cc")
+            .baseUrl("http://123.206.130.39:8080")
             .build();
 
     public static Retrofit getRetrofit() {

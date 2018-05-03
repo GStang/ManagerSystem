@@ -78,7 +78,7 @@ public class ChooseCourseActivity extends AppCompatActivity {
                         System.out.println(s);
                         Gson gson = new Gson();
                         CourseResponse res = gson.fromJson(s, CourseResponse.class);
-                        System.out.println(res.getData().get(0).getId());
+//                        System.out.println(res.getData().get(0).getId());
                         showCourse(res.getData());
 //                        System.out.println("success");
                     } catch (IOException e) {
