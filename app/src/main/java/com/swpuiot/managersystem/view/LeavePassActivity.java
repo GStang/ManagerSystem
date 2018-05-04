@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.swpuiot.managersystem.R;
@@ -17,6 +19,7 @@ import com.swpuiot.managersystem.util.RetrofitUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,6 +38,8 @@ public class LeavePassActivity extends AppCompatActivity {
     @BindView(R.id.rv_leaverecord)
     RecyclerView leavepass;
     LeaveAdapter adapter;
+    @BindView(R.id.tv_leave_pass_none)
+    TextView none;
     List<Leave> list = new ArrayList<>();
     Long cid;
 
@@ -68,6 +73,9 @@ public class LeavePassActivity extends AppCompatActivity {
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+                if (list.size()!=0){
+                    none.setVisibility(View.INVISIBLE);
                 }
             }
 

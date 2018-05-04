@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".view.SignInformationActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -42,17 +46,7 @@
             android:text="请假数："/>
 
     </LinearLayout>
-    <Button
-        android:id="@+id/btn_attdence"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="发起签到" />
 
-    <Button
-        android:id="@+id/btn_leavepass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="请假审批" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
@@ -64,4 +58,13 @@
             android:layout_height="match_parent"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_sign_information_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="暂无人加入课堂"
+        android:textSize="20sp"
+        android:layout_gravity="center"/>
+
+</FrameLayout>

@@ -34,20 +34,28 @@
         android:textSize="20sp"
         android:text="暂无签到信息"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:gravity="center_horizontal">
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_sign"
-            android:layout_marginLeft="25dp"
             android:layout_marginBottom="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|bottom" />
+            android:src="@drawable/teasign"
+            android:layout_marginRight="10dp"/>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_leavepass"
-            android:layout_marginRight="25dp"
             android:layout_marginBottom="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom" />
+            android:src="@drawable/tealeave"
+            android:layout_marginLeft="10dp"/>
+        </LinearLayout>
     </FrameLayout>
 
 </LinearLayout>

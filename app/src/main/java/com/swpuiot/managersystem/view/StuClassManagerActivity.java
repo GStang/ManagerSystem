@@ -57,6 +57,8 @@ public class StuClassManagerActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_attendence)
     Button attendence;
+    @BindView(R.id.tv_stu_class_manager_none)
+    TextView none;
 
     @BindView(R.id.rv_attendance_log)
     RecyclerView attendance_record;
@@ -99,6 +101,9 @@ public class StuClassManagerActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+                if (list.size()!=0){
+                    none.setVisibility(View.INVISIBLE);
                 }
             }
 

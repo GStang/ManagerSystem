@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.swpuiot.managersystem.R;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -31,6 +33,8 @@ public class SignInformationActivity extends AppCompatActivity {
     private ArrayList<Attendance>list = new ArrayList<Attendance>();
     private long time;
     private long cId;
+    @BindView(R.id.tv_sign_information_none)
+    TextView none;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,9 @@ public class SignInformationActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
+                if (list.size()!=0){
+                    none.setVisibility(View.INVISIBLE);
                 }
             }
 

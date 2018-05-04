@@ -78,6 +78,9 @@ public class FirstActivity extends AppCompatActivity {
     private MyUser myUser;
     private TextView name;
     private TextView note;
+    private ImageView head;
+    @BindView(R.id.tv_first_none)
+    TextView none;
     @BindView(R.id.sr_refresh)
     public  SwipeRefreshLayout refreshLayout;
 
@@ -127,6 +130,12 @@ public class FirstActivity extends AppCompatActivity {
         itemEmail.setTitle(MyUser.getUser().getEmail());
         name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_tv_first_name);
         name.setText(MyUser.getUser().getName());
+        head = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.iv_first_head);
+        if (user.getRole()==0){
+            head.setImageResource(R.drawable.stu);
+        }else {
+            head.setImageResource(R.drawable.teacher);
+        }
 
 
         menu= (ImageView) findViewById(R.id.main_menu);
@@ -193,6 +202,9 @@ public class FirstActivity extends AppCompatActivity {
 //                System.out.println("cNO"+userBeanList.get(0).getcNo());
             adapter.changeList(userBeanList);
             refreshLayout.setRefreshing(false);
+            if (userBeanList.size()!=0){
+                none.setVisibility(View.INVISIBLE);
+            }
         }
 
         @Override
@@ -224,6 +236,9 @@ public class FirstActivity extends AppCompatActivity {
 //                System.out.println("cNO"+userBeanList.get(0).getcNo());
                 adapter.changeList(userBeanList);
                 refreshLayout.setRefreshing(false);
+                if (userBeanList.size()!=0){
+                    none.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override

@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.swpuiot.managersystem.R;
@@ -38,6 +40,8 @@ public class ChooseCourseActivity extends AppCompatActivity {
     RecyclerView courselist;
     @BindView(R.id.fab_add)
     FloatingActionButton add;
+    @BindView(R.id.tv_choose_course_none)
+    TextView none;
     List list = new ArrayList<>();
     ChooseCourseAdapter adapter;
 
@@ -85,6 +89,9 @@ public class ChooseCourseActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
+                }
+                if (list.size()!=0){
+                    none.setVisibility(View.INVISIBLE);
                 }
             }
 

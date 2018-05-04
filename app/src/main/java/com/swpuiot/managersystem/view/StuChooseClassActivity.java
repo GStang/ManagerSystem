@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -19,6 +21,7 @@ import com.swpuiot.managersystem.util.RetrofitUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,6 +33,8 @@ public class StuChooseClassActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ChooseClassAdapter adapter;
     private ArrayList<Class>list = new ArrayList<Class>();
+    @BindView(R.id.tv_stu_choose_class_none)
+    TextView none;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,9 @@ public class StuChooseClassActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
+                if (list.size()!=0){
+                    none.setVisibility(View.INVISIBLE);
                 }
             }
 

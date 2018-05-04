@@ -4,36 +4,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ChooseCourseActivity">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_choose_course"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary">
-        <TextView
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_choose_course"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="选择课程"
+                    android:textColor="@color/colorWrite"
+                    android:textSize="@dimen/toolbar_title_size" />
+            </android.support.v7.widget.Toolbar>
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar_choose_course">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_class"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="50dp" />
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </RelativeLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="选择课程"
-            android:textSize="@dimen/toolbar_title_size"
-            android:layout_gravity="center"
-            android:textColor="@color/colorWrite"/>
-    </android.support.v7.widget.Toolbar>
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_choose_course">
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/add"/>
+        <TextView
+            android:id="@+id/tv_choose_course_none"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无课程"
+            android:textSize="20sp"
+            android:layout_gravity="center"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_class"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="50dp" />
-    </android.support.v4.widget.SwipeRefreshLayout>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true">
-    </android.support.design.widget.FloatingActionButton>
+    </FrameLayout>
+
 </RelativeLayout>
