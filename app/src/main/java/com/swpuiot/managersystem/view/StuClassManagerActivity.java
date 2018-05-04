@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,6 +20,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.swpuiot.managersystem.R;
+import com.swpuiot.managersystem.adapter.ClassManagerAdapter;
+import com.swpuiot.managersystem.adapter.SignInformationAdapter;
 import com.swpuiot.managersystem.entity.Attendance;
 import com.swpuiot.managersystem.entity.AttendanceKey;
 import com.swpuiot.managersystem.entity.HttpResult;
@@ -30,8 +34,10 @@ import com.swpuiot.managersystem.util.RetrofitUtil;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +57,11 @@ public class StuClassManagerActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_attendence)
     Button attendence;
-    Button attendenceRecord;
+
+    @BindView(R.id.rv_attendance_log)
+    RecyclerView attendance_record;
+    ArrayList<Attendance> list = new ArrayList<>();
+    SignInformationAdapter adapter;
     int mYear;
     int mMonth;
     int mDay;
@@ -69,8 +79,35 @@ public class StuClassManagerActivity extends AppCompatActivity {
         mDay = ca.get(Calendar.DAY_OF_MONTH);
         Intent intent = getIntent();
         cid = intent.getLongExtra("stuClass", 0);
+        adapter = new SignInformationAdapter(this,list,1);
+        attendance_record.setLayoutManager(new LinearLayoutManager(this));
+        attendance_record.setAdapter(adapter);
+        getAttendanceRecord();
     }
 
+    public void getAttendanceRecord(){
+        retrofit.create(AttendanceService.class).getSomeoneAttendance(MyUser.getUser().getId(), cid).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String s = response.body().string();
+                    Attendance[] attendances = mapper.readValue(s, Attendance[].class);
+                    for (Attendance e :
+                            attendances) {
+                        list.add(e);
+                    }
+                    adapter.notifyDataSetChanged();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
     Retrofit retrofit = RetrofitUtil.getRetrofit();
     String s;
     Leave leave = new Leave();
@@ -91,7 +128,7 @@ public class StuClassManagerActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.positivebutton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String s = invalidNumber.getText().toString()+"";
+                        String s = invalidNumber.getText().toString() + "";
                         attandance.setAttend("出席");
                         key.setId(MyUser.getUser().getId());
                         key.setcNo(cid);
@@ -123,7 +160,7 @@ public class StuClassManagerActivity extends AppCompatActivity {
         retrofit.create(AttendanceService.class).checkAttendance(RequestBody.create(MediaType.parse("application/json"), s)).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                System.out.println(response.code()+"Test");
+                System.out.println(response.code() + "Test");
                 if (response.code() == 200) {
                     try {
                         String result = response.body().string();
@@ -144,7 +181,6 @@ public class StuClassManagerActivity extends AppCompatActivity {
     @OnClick(R.id.btn_askleave)
     public void askleave() {
 
-        // TODO: 2018/5/2 一个Dialog,填写请假信息.
         final Dialog mdialog = new AlertDialog.Builder(this)
                 .setView(R.layout.askforleave)
                 .setPositiveButton(R.string.positivebutton, new DialogInterface.OnClickListener() {
@@ -152,12 +188,13 @@ public class StuClassManagerActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         String rea = reason.getText().toString();
-                        Toast.makeText(StuClassManagerActivity.this, "Click", Toast.LENGTH_SHORT).show();
-//                        initLeave(ti,rea);
+//                        Toast.makeText(StuClassManagerActivity.this, "Click", Toast.LENGTH_SHORT).show();
                         leave.setReason(reason.getText().toString());
                         leave.setUid(MyUser.getUser().getId());
                         leave.setResult("待审批");
                         leave.setCid(cid);
+                        leave.setDate("2018-5-3");
+                        initLeave();
 
 //                        leave.setDate(new Date());
                     }
@@ -185,10 +222,28 @@ public class StuClassManagerActivity extends AppCompatActivity {
     }
 
     public void initLeave() {
-        s = gson.toJson(leave);
-        System.out.println(s);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), s);
-        retrofit.create(LeaveService.class).addLeave(body);
+        String temp = "";
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            temp = mapper.writeValueAsString(leave);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+//        s = gson.toJson(leave);
+        System.out.println(temp);
+
+        retrofit.create(LeaveService.class).addLeave(RequestBody.create(MediaType.parse("application/json"), temp)).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code() == 200)
+                    Toast.makeText(StuClassManagerActivity.this, "请假申请成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(StuClassManagerActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**

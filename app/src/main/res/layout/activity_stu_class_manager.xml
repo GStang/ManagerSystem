@@ -10,19 +10,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.swpuiot.managersystem.view.StuClassManagerActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的成绩:" />
+
+        <TextView
+            android:id="@+id/tv_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无成绩" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btn_askleave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="请假" />
-    <Button
-        android:id="@+id/attendencerecord"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="查看出勤情况" />
+
     <Button
         android:id="@+id/btn_attendence"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="参与考勤" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_attendance_log"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

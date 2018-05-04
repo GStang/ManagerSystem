@@ -40,4 +40,8 @@ public interface LeaveService {
      */
     @GET("leave/updateStatus")
     Call<ResponseBody> updateStatus(@Query("id") Long id, @Query("status") Long status);
+
+    @GET("leave/waitpass")
+    Call<ResponseBody> waitPass(@Query("id") Long id);
+
 }

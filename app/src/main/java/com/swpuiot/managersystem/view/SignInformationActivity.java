@@ -41,7 +41,7 @@ public class SignInformationActivity extends AppCompatActivity {
         cId = getIntent().getLongExtra("signID",0L);
         getList();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_sign_information);
-        adapter = new SignInformationAdapter(this,list);
+        adapter = new SignInformationAdapter(this,list,0);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
@@ -54,7 +54,6 @@ public class SignInformationActivity extends AppCompatActivity {
         service.getSometimeAttendence(cId,time).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                // TODO: 2018/5/3 签到请求
                 System.out.println(response.code());
                 if (response.code() == 200) {
                     try {
