@@ -29,6 +29,7 @@ import com.swpuiot.managersystem.entity.Leave;
 import com.swpuiot.managersystem.entity.StudentAndClassInfo;
 import com.swpuiot.managersystem.entity.User;
 import com.swpuiot.managersystem.httpinterface.AttendanceService;
+import com.swpuiot.managersystem.httpinterface.GradeService;
 import com.swpuiot.managersystem.httpinterface.LeaveService;
 import com.swpuiot.managersystem.util.RetrofitUtil;
 
@@ -60,6 +61,9 @@ public class StuClassManagerActivity extends AppCompatActivity {
     @BindView(R.id.tv_stu_class_manager_none)
     TextView none;
 
+    @BindView(R.id.tv_grade)
+    TextView grade;
+
     @BindView(R.id.rv_attendance_log)
     RecyclerView attendance_record;
     ArrayList<Attendance> list = new ArrayList<>();
@@ -81,13 +85,37 @@ public class StuClassManagerActivity extends AppCompatActivity {
         mDay = ca.get(Calendar.DAY_OF_MONTH);
         Intent intent = getIntent();
         cid = intent.getLongExtra("stuClass", 0);
-        adapter = new SignInformationAdapter(this,list,1);
+        adapter = new SignInformationAdapter(this, list, 1);
         attendance_record.setLayoutManager(new LinearLayoutManager(this));
         attendance_record.setAdapter(adapter);
         getAttendanceRecord();
+        getGrade();
     }
 
-    public void getAttendanceRecord(){
+    public void getGrade() {
+        retrofit.create(GradeService.class).getUserGrade(MyUser.getUser().getId(), cid).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code() == 200)
+                    if (response.body() != null) {
+                        try {
+                            String s = response.body().string();
+                            grade.setText(s);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getAttendanceRecord() {
         retrofit.create(AttendanceService.class).getSomeoneAttendance(MyUser.getUser().getId(), cid).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -102,7 +130,7 @@ public class StuClassManagerActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if (list.size()!=0){
+                if (list.size() != 0) {
                     none.setVisibility(View.INVISIBLE);
                 }
             }
@@ -113,6 +141,7 @@ public class StuClassManagerActivity extends AppCompatActivity {
             }
         });
     }
+
     Retrofit retrofit = RetrofitUtil.getRetrofit();
     String s;
     Leave leave = new Leave();

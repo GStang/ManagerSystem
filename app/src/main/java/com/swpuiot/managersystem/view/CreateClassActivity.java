@@ -59,7 +59,9 @@ public class CreateClassActivity extends AppCompatActivity {
     com.swpuiot.managersystem.entity.Class myClass = new com.swpuiot.managersystem.entity.Class();
     String s;
 
-    public void initClass() {
+    public boolean initClass() {
+        if (classNo.getText().toString().equals("") || className.getText().toString().equals(""))
+            return false;
         Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new ClassTypeAdapter()).create();
         myClass.setCno(Long.valueOf(classNo.getText().toString()));
         myClass.setcName(className.getText().toString());
@@ -67,6 +69,7 @@ public class CreateClassActivity extends AppCompatActivity {
         myClass.setcId(MyUser.getUser().getId());
         s = gson.toJson(myClass);
         System.out.println(s);
+        return true;
     }
 
     Retrofit retrofit = RetrofitUtil.getRetrofit();
@@ -74,8 +77,9 @@ public class CreateClassActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_addclass)
     public void addClass() {
-        initClass();
-
+        if (!initClass()){
+            Toast.makeText(CreateClassActivity.this, "信息不能为空", Toast.LENGTH_SHORT).show();
+            return;}
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), s);
         retrofit.create(ClassService.class).addClass(body).enqueue(new Callback<ResponseBody>() {
             @Override

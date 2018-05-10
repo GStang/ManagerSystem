@@ -63,14 +63,18 @@ public class MainActivity extends AppCompatActivity implements LoginRequest.Getr
     @OnClick(R.id.btn_login)
     public void login() {
 
-        Long susername = Long.valueOf(username.getText().toString());
-        String spassword = password.getText().toString();
-        Gson gson = new Gson();
-        LoginEntity entity = new LoginEntity(susername, spassword);
-        String s = gson.toJson(entity);
-        LoginRequest request = new LoginRequest(this);
-        request.login(s);
 
+        Gson gson = new Gson();
+        if (username.getText().toString().equals("") || password.getText().toString().equals(""))
+            Toast.makeText(MainActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+        else {
+            Long susername = Long.valueOf(username.getText().toString());
+            String spassword = password.getText().toString();
+            LoginEntity entity = new LoginEntity(susername, spassword);
+            String s = gson.toJson(entity);
+            LoginRequest request = new LoginRequest(this);
+            request.login(s);
+        }
     }
 
     Gson gson = new Gson();
@@ -97,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements LoginRequest.Getr
                 }
 
             } catch (IOException e) {
-                e.printStackTrace();
+                Toast.makeText(MainActivity.this, "网络故障，请检查您的网络", Toast.LENGTH_SHORT).show();
             }
         }
     }

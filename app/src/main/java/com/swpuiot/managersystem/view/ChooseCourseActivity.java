@@ -2,6 +2,7 @@ package com.swpuiot.managersystem.view;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,7 +33,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- *  这个是老师创建班级的时候选择课程的界面
+ * 这个是老师创建班级的时候选择课程的界面
  */
 public class ChooseCourseActivity extends AppCompatActivity {
 
@@ -45,6 +46,10 @@ public class ChooseCourseActivity extends AppCompatActivity {
     List list = new ArrayList<>();
     ChooseCourseAdapter adapter;
 
+    @BindView(R.id.srf_choose_course)
+    SwipeRefreshLayout refreshLayout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,16 +60,25 @@ public class ChooseCourseActivity extends AppCompatActivity {
         courselist.setLayoutManager(new LinearLayoutManager(this));
         courselist.setAdapter(adapter);
         getCourse();
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getCourse();
+            }
+        });
     }
 
+
     /**
-     * 跳转到创建CourseActivity*/
+     * 跳转到创建CourseActivity
+     */
     @OnClick(R.id.fab_add)
     public void AddCouseOnclick() {
         Intent intent = new Intent(this, CreateCourseActivity.class);
         startActivity(intent);
 
     }
+
     private void getCourse() {
         Retrofit retrofit = RetrofitUtil.getRetrofit();
         CourseService service = retrofit.create(CourseService.class);
@@ -85,25 +99,27 @@ public class ChooseCourseActivity extends AppCompatActivity {
 //                        System.out.println(res.getData().get(0).getId());
                         showCourse(res.getData());
 //                        System.out.println("success");
+                        refreshLayout.setRefreshing(false);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                 }
-                if (list.size()!=0){
-                    none.setVisibility(View.INVISIBLE);
-                }
+
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                refreshLayout.setRefreshing(false);
             }
         });
     }
 
     public void showCourse(List<CourseResponse.DataBean> list) {
         adapter.changelist(list);
+        if (list.size() != 0) {
+            none.setVisibility(View.INVISIBLE);
+        }
         adapter.notifyDataSetChanged();
     }
 }

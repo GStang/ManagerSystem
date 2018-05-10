@@ -11,50 +11,81 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="课堂管理"
-            android:textSize="@dimen/toolbar_title_size"
             android:textColor="@color/colorWrite"
-            android:layout_gravity="center"/>
+            android:textSize="@dimen/toolbar_title_size" />
     </android.support.v7.widget.Toolbar>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_class_manager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:id="@+id/tv_class_manager_none"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="20sp"
-        android:text="暂无签到信息"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_class_manager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <FrameLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:visibility="invisible"
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_class_manager_none"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="暂无签到信息"
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="bottom"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_sign"
-            android:layout_marginBottom="25dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/teasign"
-            android:layout_marginRight="10dp"/>
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_leavepass"
-            android:layout_marginBottom="25dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/tealeave"
-            android:layout_marginLeft="10dp"/>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/teasign" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_leavepass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/tealeave" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/grade" />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/output"
+                 />
         </LinearLayout>
     </FrameLayout>
 

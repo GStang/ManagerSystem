@@ -30,16 +30,19 @@
         android:padding="4dp">
 
         <TextView
+            android:id="@+id/tv_total_count"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="总人数："/>
         <TextView
+            android:id="@+id/tv_sign_count"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="已签到："/>
         <TextView
+            android:id="@+id/tv_leave_count"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

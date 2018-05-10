@@ -48,16 +48,22 @@ public class CreateCourseActivity extends AppCompatActivity {
 
     Course course = new Course();
 
-    public void initcourse() {
+    public boolean initcourse() {
+        if (courseid.getText().toString().equals("") || englishname.getText().toString().equals("") || coursename.getText().toString().equals(""))
+            return false;
         course.setId(Long.valueOf(courseid.getText().toString()));
         course.setEnglish(englishname.getText().toString());
         course.setName(coursename.getText().toString());
-
+        return true;
     }
 
     @OnClick(R.id.btn_addcourse)
     public void addCourse() {
-        initcourse();
+        if (!initcourse()) {
+            Toast.makeText(CreateCourseActivity.this, "信息不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Gson gson = new GsonBuilder().registerTypeAdapter(Course.class, new CourseTypeAdapter()).create();
         String s = gson.toJson(course);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), s);
@@ -67,11 +73,11 @@ public class CreateCourseActivity extends AppCompatActivity {
                 System.out.println(response.code());
                 if (response.code() == 200) {
                     Toast.makeText(CreateCourseActivity.this, "添加课程成功", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CreateCourseActivity.this,CreateClassActivity.class);
-                    intent.putExtra("course",course);
+                    Intent intent = new Intent(CreateCourseActivity.this, CreateClassActivity.class);
+                    intent.putExtra("course", course);
                     startActivity(intent);
                     finish();
-                }else{
+                } else {
                     Toast.makeText(CreateCourseActivity.this, response.message(), Toast.LENGTH_SHORT).show();
                 }
             }

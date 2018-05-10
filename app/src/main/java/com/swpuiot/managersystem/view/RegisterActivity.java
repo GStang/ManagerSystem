@@ -62,6 +62,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_register)
     public void register() {
+        if (id.getText().toString().equals("") || name.getText().toString().equals("") || major.getText().toString().equals("") || password.getText().toString().equals("")
+                || repaswrod.getText().toString().equals("") || email.getText().toString().equals("") || phone.getText().toString().equals("") || phone.getText().toString().equals("")) {
+            Toast.makeText(RegisterActivity.this, "个人信息不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!password.getText().toString().equals(repaswrod.getText().toString())) {
+            Toast.makeText(RegisterActivity.this, "两次密码不一致", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Long idvalue = Long.valueOf(id.getText().toString());
         String namevalue = name.getText().toString();
         String sexvalue;
@@ -102,17 +111,18 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.code() == 409) {
-                    Toast.makeText(RegisterActivity.this, response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"用户名或电话或邮箱被占用", Toast.LENGTH_SHORT).show();
                 }
-                if (response.code()==400){
+                if (response.code() == 400) {
                     Toast.makeText(RegisterActivity.this, "请填写完整字段", Toast.LENGTH_SHORT).show();
                 }
                 if (response.body() != null) {
                     try {
                         if (response.code() == 200) {
-                            Intent intent = new Intent(RegisterActivity.this, FirstActivity.class);
-                            intent.putExtra("user", user);
-                            startActivity(intent);
+//                            Intent intent = new Intent(RegisterActivity.this, FirstActivity.class);
+//                            intent.putExtra("user", user);
+//                            startActivity(intent);
+                            Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                         System.out.println(response.code() + " " + response.body().string());
@@ -124,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, t.getMessage()+"error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, t.getMessage() + "error", Toast.LENGTH_SHORT).show();
             }
         });
     }

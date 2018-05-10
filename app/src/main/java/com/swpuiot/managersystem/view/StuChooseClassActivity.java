@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +41,7 @@ public class StuChooseClassActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_choose_class);
-
+        ButterKnife.bind(this);
         init();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_choose_class);
         adapter = new ChooseClassAdapter(this,list);
