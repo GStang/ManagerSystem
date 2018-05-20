@@ -1,5 +1,7 @@
 package com.swpuiot.managersystem.httprequestimpl;
 
+import android.widget.Toast;
+
 import com.swpuiot.managersystem.httpinterface.LoginService;
 import com.swpuiot.managersystem.util.RetrofitUtil;
 
@@ -21,6 +23,7 @@ public class LoginRequest {
    public interface Getresponse{
         void getresult(Response<ResponseBody> body);
 
+       void failed(Throwable t);
     }
         Getresponse listener;
     public LoginRequest(Getresponse listener) {
@@ -40,13 +43,12 @@ public class LoginRequest {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 listener.getresult(response);
-//                getresult(response);
 
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                listener.failed(t);
             }
         });
     }

@@ -17,7 +17,7 @@ public interface AttendanceService {
     Call<ResponseBody> get(@Query("id") Long id);
 
     @GET("/attend/validate")
-    Call<ResponseBody> getValidateNumber(@Query("id") Long id);
+    Call<ResponseBody> getValidateNumber(@Query("id") Long id,@Query("jingdu")double jingdu,@Query("weidu")double weidu);
 
     @POST("/attend/checkAttendance")
     Call<ResponseBody> checkAttendance(@Body RequestBody StudentAndClassInfoBody);

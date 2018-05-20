@@ -81,8 +81,6 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
     public void changeList(List<StuJoinedClassEntity> list){
         this.list = list;
 
-        long id = list.get(0).getCno();
-        System.out.println("id "+id);
         notifyDataSetChanged();
     }
 }

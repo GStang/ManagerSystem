@@ -3,8 +3,10 @@ package com.swpuiot.managersystem;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements LoginRequest.Getr
     @BindView(R.id.et_password)
     EditText password;
 
+    @BindView(R.id.progressbar)
+    ProgressBar progressBar;
     Unbinder unBinder;
     Intent intent;
 
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements LoginRequest.Getr
 
     @OnClick(R.id.btn_login)
     public void login() {
-
+        progressBar.setVisibility(View.VISIBLE);
 
         Gson gson = new Gson();
         if (username.getText().toString().equals("") || password.getText().toString().equals(""))
@@ -109,6 +113,12 @@ public class MainActivity extends AppCompatActivity implements LoginRequest.Getr
     @Override
     public void getresult(Response<ResponseBody> body) {
         codejudge(body);
+        progressBar.setVisibility(View.INVISIBLE);
+    }
 
+    @Override
+    public void failed(Throwable t) {
+        progressBar.setVisibility(View.INVISIBLE);
+        Toast.makeText(MainActivity.this, "连接失败，请检查你的网络", Toast.LENGTH_SHORT).show();
     }
 }

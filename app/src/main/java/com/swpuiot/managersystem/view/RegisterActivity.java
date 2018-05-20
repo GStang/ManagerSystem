@@ -3,7 +3,9 @@ package com.swpuiot.managersystem.view;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -16,6 +18,7 @@ import com.swpuiot.managersystem.httpinterface.RegisterService;
 import com.swpuiot.managersystem.util.RetrofitUtil;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +54,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText phone;
     @BindView(R.id.rg_role)
     RadioGroup role;
+    @BindView(R.id.layout)
+    LinearLayout layout;
     Retrofit retrofit = RetrofitUtil.getRetrofit();
 
     @Override
@@ -58,6 +63,15 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+        role.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.rb_stu) {
+                    layout.setVisibility(View.GONE);
+                }else
+                    layout.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @OnClick(R.id.btn_register)
@@ -80,23 +94,26 @@ public class RegisterActivity extends AppCompatActivity {
             sexvalue = "女";
         String majorvalue = major.getText().toString();
         String rankvalue = rank.getText().toString();
-        String usernamevalue = username.getText().toString();
         String passwordvalue = password.getText().toString();
         String repasswordvalue = repaswrod.getText().toString();
         String emailvalue = email.getText().toString();
         Long phonevalue = Long.valueOf(phone.getText().toString());
         int rolevalue;
-        if (role.getCheckedRadioButtonId() == R.id.rb_stu)
+        if (role.getCheckedRadioButtonId() == R.id.rb_stu) {
             rolevalue = 0;
-        else
+        }
+        else {
             rolevalue = 1;
+        }
         final User user = new User();
         user.setId(idvalue);
         user.setName(namevalue);
         user.setSex(sexvalue);
         user.setMajor(majorvalue);
-        user.setRank(rankvalue);
-        user.setUsername(usernamevalue);
+        if (rolevalue==1){
+            user.setRank(rankvalue);
+        }
+        user.setUsername(UUID.fromString(System.currentTimeMillis()+"").toString());
         user.setPassword(passwordvalue);
         user.setEmail(emailvalue);
         user.setPhone(phonevalue);
@@ -134,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, t.getMessage() + "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
         });
     }
